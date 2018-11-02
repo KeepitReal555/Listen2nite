@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Listen2nite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'listen2nie_db',
+        'NAME': 'listen2nite_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',

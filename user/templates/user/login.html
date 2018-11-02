@@ -47,14 +47,14 @@
                                 {{ form.password }}
                             </td>
                         </tr>
-                        <tr>
-                            <td width="120" align="right">你是机器人么?</td>
-                            <td width="auto" align="left">
-                                <img src="#" id="checkCode" style="width: 120px; height: 35px; border-radius: 3px; border: 1px solid #ccc;"/>
-                                <div class="sep10"></div>
-                                {{ form.checkcode }}
-                            </td>
-                        </tr>
+{#                        <tr>#}
+{#                            <td width="120" align="right">你是机器人么?</td>#}
+{#                            <td width="auto" align="left">#}
+{#                                <img src="{% url 'user:checkcode' %}" id="checkCode" style="width: 120px; height: 35px; border-radius: 3px; border: 1px solid #ccc;"/>#}
+{#                                <div class="sep10"></div>#}
+{#                                {{ form.checkcode }}#}
+{#                            </td>#}
+{#                        </tr>#}
                         <tr>
                             <td width="120" align="right"></td>
                             <td width="auto" align="left">
@@ -95,4 +95,9 @@
 {% endblock %}
 
 {% block JS %}
+    <script>
+        $("#checkCode").click(function () {
+            this.src += '?'
+        });
+    </script>
 {% endblock %}
