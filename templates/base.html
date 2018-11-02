@@ -1,9 +1,11 @@
+{#{% load staticfiles %}#}
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>V2EX</title>
+    <title>Listen2nite</title>
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/font-awesome.css">
     <link rel="stylesheet" href="/static/plugin/highlight/tomorrow.css">
@@ -17,7 +19,7 @@
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tbody>
                 <tr>
-                    <td width="110" align="left"><a href="{% url 'index' %}" name="top" title="way to explore"><img
+                    <td width="110" align="left"><a href="/" name="top" title="way to explore"><img
                             src="/static/img/fake_logo@2x.png" border="0" align="default" alt="V2EX"
                             width="94" height="30"></a></td>
                     <td width="auto" align="left">
@@ -31,14 +33,14 @@
                     </td>
                     {% if request.session.user_info %}
                         <td width="570" align="right" style="padding-top: 2px;">
-                            <a href="{% url 'index' %}" class="top">首页</a>
-                            &nbsp;&nbsp;&nbsp;<a href="{% url 'member' request.session.user_info.username %}" class="top">{{ request.session.user_info.username }}</a>
+                            <a href="#" class="top">首页</a>
+                            &nbsp;&nbsp;&nbsp;<a href="#">{{ request.session.user_info.username }}</a>
                             &nbsp;&nbsp;&nbsp;<a href="/notes" class="top">记事本</a>
                             &nbsp;&nbsp;&nbsp;<a href="/settings" class="top">设置</a>
-                            &nbsp;&nbsp;&nbsp;<a href="#;" onclick="if (confirm('确定要从 V2EX 登出？')) { location.href= '{% url 'signout' %}'; }" class="top">登出</a></td>
+                            &nbsp;&nbsp;&nbsp;<a href="#;" onclick="if (confirm('确定要从 V2EX 登出？')) { location.href= '#'; }" class="top">登出</a></td>
                     {% else %}
-                        <td width="570" align="right" style="padding-top: 2px;"><a href="{% url 'index' %}" class="top">首页</a>&nbsp;&nbsp;&nbsp;<a
-                            href="{% url 'signup' %}" class="top">注册</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'signin' %}" class="top">登录</a></td>
+                        <td width="570" align="right" style="padding-top: 2px;"><a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;<a
+                            href="{% url 'user:signup' %}" class="top">注册</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'user:login' %}" class="top">登录</a></td>
                     {% endif %}
                 </tr>
                 </tbody>
@@ -107,7 +109,7 @@
     /* title 变化 */
     document.addEventListener("visibilitychange", function () {
         if (document.hidden) {
-            $('title').text('V2EX');
+            $('title').text('Listen2nite');
         } else {
             $('title').text('欢迎回来ヽ(✿ﾟ▽ﾟ)ノ');
             setTimeout("$('title').text('V2EX');", 3000);

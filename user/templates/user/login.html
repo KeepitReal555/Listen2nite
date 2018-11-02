@@ -1,14 +1,10 @@
 {% extends 'user/master.html' %}
-{#{% load staticfiles %}#}
-
-{#{% block CSS %}#}
-{#    <link rel="stylesheet" href="{% static 'css/user.css' %}"/>#}
-{#{% endblock %}#}
+{% load staticfiles %}
 
 
 {% block main %}
     <div class="box">
-        <div class="header"><a href="/">Listen2nite</a><span class="chevron"> > </span> 注册 </div>
+        <div class="header"><a href="/">Listen2nite</a><span class="chevron"> > </span> 登录 </div>
         {% if has_error %}
             <div class="problem">请解决以下问题后再提交:
                 <ul>
@@ -18,11 +14,8 @@
                     {% if obj.errors.password.0 %}
                         <li>{{ obj.errors.password.0 }}</li>
                     {% endif %}
-                    {% if obj.errors.email.0 %}
-                        <li>{{ obj.errors.email.0 }}</li>
-                    {% endif %}
-                    {% if obj.errors.mobile.0 %}
-                        <li>{{ obj.errors.mobile.0 }}</li>
+                    {% if user_error %}
+                        <li>{{ user_error }}</li>
                     {% endif %}
                     {% if code_error %}
                         <li>{{ code_error }}</li>
@@ -31,9 +24,12 @@
             </div>
         {% endif %}
         <div class="inner">
-            <form method="post" action="{% url 'user:signup' %}">
+            <form method="post" action="{% url 'user:login' %}">
                 {% csrf_token %}
                 <table cellpadding="5" cellspacing="0" border="0" width="100%">
+                    {% if next_url %}
+                        <input type="hidden" name="next" value="{{ next_url }}">
+                    {% endif %}
                     <tbody>
                         <tr>
                             <td width="120" align="right" valign="top">
@@ -41,41 +37,20 @@
                                 用户名
                             </td>
                             <td width="auto" align="left">
-{#                                <div class="sep5"></div>#}
                                 {{ form.username }}
                                 <div class="sep5"></div>
-                                <span class="comment">请使用英文字母 a-z,A-Z 或数字 0-9 </span>
                             </td>
                         </tr>
                         <tr>
                             <td width="120" align="right">密码</td>
-                            <td width="auto" align="left">{{ form.password }}</td>
-                        </tr>
-                        <tr>
-                            <td width="120" align="right" valign="top">
-                                <div class="sep5"></div>
-                                电子邮件
-                            </td>
                             <td width="auto" align="left">
-                                {{ form.email }}
-                                <div class="sep5"></div>
-                                <span class="comment">请使用真实电子邮箱注册，我们不会将你的邮箱地址分享给任何人</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="120" align="right" valign="top">
-                                <div class="sep5"></div>
-                                手机号码
-                            </td>
-                            <td width="auto" align="left">
-                                {{ form.mobile }}
-                                <div class="sep5"></div>
+                                {{ form.password }}
                             </td>
                         </tr>
                         <tr>
                             <td width="120" align="right">你是机器人么?</td>
                             <td width="auto" align="left">
-                                <img src="#" id="checkCode" style="width: 120px; height: 35px; border-radius: 3px; border: 1px solid #ccc;">
+                                <img src="#" id="checkCode" style="width: 120px; height: 35px; border-radius: 3px; border: 1px solid #ccc;"/>
                                 <div class="sep10"></div>
                                 {{ form.checkcode }}
                             </td>
@@ -83,7 +58,13 @@
                         <tr>
                             <td width="120" align="right"></td>
                             <td width="auto" align="left">
-                                <input type="submit" class="btn btn-sm btn-secondary" value="注册">
+                                <input type="submit" class="btn btn-sm btn-secondary" value="登录">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="120" align="right"></td>
+                            <td width="auto" align="left">
+                                <a href="#">我忘记密码了</a>
                             </td>
                         </tr>
                     </tbody>
@@ -93,6 +74,25 @@
     </div>
 {% endblock %}
 
-{% block JS %}
+{% block rightbar %}
+    <div class="box">
+        <div class="cell">
+            <strong>你也可以选择以下方式登录</strong>
+        </div>
+        <div class="inner">
+            <div class="sep5"></div>
+                <div align="center"><a href="{% url 'user:signup' %}" class="btn btn-sm btn-secondary">现在注册</a>
+                    <div class="sep5"></div>
+                    <div class="sep10"></div>
+                    已注册用户请 &nbsp;<a href="{% url 'user:login' %}">登录</a></div>
+        </div>
+    </div>
+{#    <div class="sep20"></div>#}
+{#    <div class="box">#}
+{#        <div class="inner"></div>#}
+{#    </div>#}
+    <div class="sep20"></div>
+{% endblock %}
 
+{% block JS %}
 {% endblock %}

@@ -33,10 +33,11 @@ def email_unique_validate(email):
         raise ValidationError('Email已经存在，请换一个')
 
 
-class SignupForm(forms.Form):
+class SignupForm(forms.ModelForm):
     username = forms.CharField(validators=[user_unique_validate, username_rule_validate, ], required=True,
                                max_length=30, min_length=5,
-                               error_messages={'required': '用户名不能为空', 'max_length': '用户名至少5位',
+                               error_messages={'required': '用户名不能为空',
+                                               'max_length': '用户名至少5位',
                                                'min_length': '用户名最多30位'})
     password = forms.CharField(min_length=6, max_length=50, required=True,
                                error_messages={'required': '密码不能为空',
@@ -44,15 +45,30 @@ class SignupForm(forms.Form):
                                                'min_length': '密码不能少于6位',
                                                'max_length': '密码最多50位'})
     email = forms.EmailField(validators=[email_unique_validate, ], required=True,
-                             error_messages={'required': '邮箱不能为空', 'invalid': '邮箱格式错误'})
+                             error_messages={'required': '邮箱不能为空',
+                                             'invalid': '邮箱格式错误'})
     mobile = forms.CharField(validators=[mobile_validate, ], required=True,
                              error_messages={'required': '手机号不能为空'})
+    checkcode = forms.CharField(min_length=4, max_length=10, required=True,
+                                error_messages={'required': '验证码不能为空',
+                                                'invalid': '验证码不匹配'})
+
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'password', 'email', 'email_verify', 'checkcode']
 
 
-class LoginForm(forms.Form):
+class LoginForm(forms.ModelForm):
     username = forms.CharField(required=True, max_length=50,
                                error_messages={'required': '用户名不能为空'}, )
     password = forms.CharField(min_length=6, max_length=50, required=True,
                                error_messages={'required': '密码不能为空',
                                                'invalid': '密码格式错误',
                                                'min_length': '密码不能少于6位'})
+    checkcode = forms.CharField(min_length=4, max_length=10, required=True,
+                                error_messages={'required': '验证码不能为空',
+                                                'invalid': '验证码不匹配'})
+
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'password', 'checkcode']

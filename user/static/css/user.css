@@ -1,0 +1,33 @@
+.header {
+    padding: 10px;
+    font-size: 15px;
+    line-height: 120%;
+    text-align: left;
+    border-bottom: 1px solid #e2e2e2;
+    overflow: auto;
+}
+a:active {
+    color: #778087;
+    text-decoration: none;
+    word-break: break-all;
+}
+.sls {
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    width: 240px;
+}
+.problem {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 120%;
+    text-align: left;
+    background-color: #ffffc0;
+    border-left: 5px solid #fff000;
+    border-bottom: 1px solid #e2e2e2;
+    color: #333;
+}
+.comment {
+    color: #4d4d4c;
+}
