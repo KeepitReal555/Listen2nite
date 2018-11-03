@@ -31,13 +31,14 @@
                             </form>
                         </div>
                     </td>
-                    {% if request.session.user_info %}
+                    {% if not user.is_anonymous %}
                         <td width="570" align="right" style="padding-top: 2px;">
-                            <a href="#" class="top">首页</a>
-                            &nbsp;&nbsp;&nbsp;<a href="#">{{ request.session.user_info.username }}</a>
-                            &nbsp;&nbsp;&nbsp;<a href="/notes" class="top">记事本</a>
-                            &nbsp;&nbsp;&nbsp;<a href="/settings" class="top">设置</a>
-                            &nbsp;&nbsp;&nbsp;<a href="#;" onclick="if (confirm('确定要从 V2EX 登出？')) { location.href= '#'; }" class="top">登出</a></td>
+                            <a href="/" class="top">首页</a>
+                            <a href="#">{{ user.username }}</a>
+{#                            <a href="/notes" class="top">记事本</a>#}
+                            <a href="/settings" class="top">设置</a>
+{#                            &nbsp;&nbsp;&nbsp;<a href="#;" onclick="if (confirm('确定要从 V2EX 登出？')) { location.href= '{% url 'user:logout' %}'; }" class="top">登出</a></td>#}
+                            <a href="{% url 'user:logout' %}" class="top">登出</a>
                     {% else %}
                         <td width="570" align="right" style="padding-top: 2px;"><a href="/" class="top">首页</a>&nbsp;&nbsp;&nbsp;<a
                             href="{% url 'user:signup' %}" class="top">注册</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'user:login' %}" class="top">登录</a></td>

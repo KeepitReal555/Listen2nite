@@ -24,12 +24,12 @@
             </div>
         {% endif %}
         <div class="inner">
-            <form method="post" action="{% url 'user:login' %}">
+            <form method="post" action="{% url 'user:login' %}" novalidate>
                 {% csrf_token %}
                 <table cellpadding="5" cellspacing="0" border="0" width="100%">
-                    {% if next_url %}
-                        <input type="hidden" name="next" value="{{ next_url }}">
-                    {% endif %}
+{#                    {% if next_url %}#}
+{#                        <input type="hidden" name="next" value="{{ next_url }}">#}
+{#                    {% endif %}#}
                     <tbody>
                         <tr>
                             <td width="120" align="right" valign="top">
@@ -47,26 +47,26 @@
                                 {{ form.password }}
                             </td>
                         </tr>
-{#                        <tr>#}
-{#                            <td width="120" align="right">你是机器人么?</td>#}
-{#                            <td width="auto" align="left">#}
-{#                                <img src="{% url 'user:checkcode' %}" id="checkCode" style="width: 120px; height: 35px; border-radius: 3px; border: 1px solid #ccc;"/>#}
-{#                                <div class="sep10"></div>#}
-{#                                {{ form.checkcode }}#}
-{#                            </td>#}
-{#                        </tr>#}
+                        <tr>
+                            <td width="120" align="right">你是机器人么?</td>
+                            <td width="auto" align="left">
+                                <img src="{% url 'user:checkcode' %}" id="checkCode" style="width: 120px; height: 35px; border-radius: 3px; border: 1px solid #ccc;"/>
+                                <div class="sep10"></div>
+                                <input type="text" class="sls" name="check_code" value="" placeholder="请输入上图中的验证码">
+                            </td>
+                        </tr>
                         <tr>
                             <td width="120" align="right"></td>
                             <td width="auto" align="left">
                                 <input type="submit" class="btn btn-sm btn-secondary" value="登录">
                             </td>
                         </tr>
-                        <tr>
-                            <td width="120" align="right"></td>
-                            <td width="auto" align="left">
-                                <a href="#">我忘记密码了</a>
-                            </td>
-                        </tr>
+{#                        <tr>#}
+{#                            <td width="120" align="right"></td>#}
+{#                            <td width="auto" align="left">#}
+{#                                <a href="#">我忘记密码了</a>#}
+{#                            </td>#}
+{#                        </tr>#}
                     </tbody>
                 </table>
             </form>

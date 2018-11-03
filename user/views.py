@@ -10,6 +10,10 @@ from django.db.models import Q
 from django.views.generic import (
     CreateView, View
 )
+from django.views.generic.edit import FormView, ProcessFormView
+from django.contrib.auth.views import LoginView
+from django.db.models import Q
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import UserProfile
 from .forms import SignupForm, LoginForm
@@ -29,7 +33,7 @@ def check_code(request):
     return HttpResponse(stream.getvalue())
 
 
-class SignUpView(CreateView):
+class UserSignUpView(CreateView):
     """
     注册视图
     """
@@ -37,70 +41,63 @@ class SignUpView(CreateView):
     form_class = SignupForm
     template_name = 'user/signup.html'
 
-    def post(self, request, *args, **kwargs):
-        has_error = True
-        if request.POST.get('checkcode', None):
-            # 判断验证码
-            # print(request.session['CheckCode'])
-            # print(request.POST.get('checkcode'))
-            if request.session['CheckCode'].upper() == request.POST.get('checkcode').upper():
-                # Form验证
-                obj = SignupForm(request.POST)
-                print(obj)
-                # if obj.is_valid():
-                #     has_error = False
-                #     username = obj.cleaned_data['username']
-                #     password = obj.cleaned_data['password']
-                #     email = obj.cleaned_data['email']
-                #     mobile = obj.cleaned_data['mobile']
-                #     # 保存用户
-                #     user_obj = UserProfile()
-                #     user_obj.username = username
-                #     user_obj.email = email
-                #     user_obj.mobile = mobile
-                #     user_obj.set_password(password)
-                #     print(user_obj)
-                #     user_obj.save()
-                #     # 注册成功，创建用户details 表
-                #     # UserDetails.objects.create(user_id=user_obj.id)
-                #     login(request, user_obj)
-                #     return redirect(reverse('home'))
-                has_error = False
-                username = obj.cleaned_data['username']
-                password = obj.cleaned_data['password']
-                email = obj.cleaned_data['email']
-                mobile = obj.cleaned_data['mobile']
-                # 保存用户
-                user_obj = UserProfile()
-                user_obj.username = username
-                user_obj.email = email
-                user_obj.mobile = mobile
-                user_obj.set_password(password)
-                print(user_obj)
-                user_obj.save()
-                # 注册成功，创建用户details 表
-                # UserDetails.objects.create(user_id=user_obj.id)
-                login(request, user_obj)
-                return redirect(reverse('home'))
-            else:
-                code_error = "验证码错误"
-                return redirect('user:signup')
+    def form_valid(self, form):
+        # 比较验证码
+        # 存入数据库
+        # print(self.request.session['CheckCode'])
+        # print(self.request.POST.get('check_code'))
+        if self.request.session['CheckCode'].upper() == self.request.POST.get('check_code').upper():
+            # print('验证码相同')
+            user = form.save()
+            # print('验证成功')
+            login(self.request, user)
+            return redirect('home')
         else:
-            code_error = "请输入验证码"
-        # return render(request, 'user/signup.html', locals())
-        return redirect('user:signup')
-
-    # def form_valid(self, form):
-    #
-    #     # 比较验证码
-    #     # 存入数据库
-    #     user = form.save()
-    #     print('验证成功')
-    #     login(self.request, user)
-    #     return redirect('home')
+            return redirect('user:signup')
 
 
+class UserLoginView(CreateView):
+    """
+    注册视图
+    """
+    model = UserProfile
+    form_class = LoginForm
+    template_name = 'user/login.html'
+
+    # def post(self, request, *args, **kwargs):
+    #     form = self.get_form()
+    #     return self.form_valid(form)
+
+    def form_valid(self, form):
+        # 比较验证码
+        # 存入数据库
+        print(self.request.session['CheckCode'])
+        print(self.request.POST.get('check_code'))
+        if self.request.session['CheckCode'].upper() == self.request.POST.get('check_code').upper():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = UserProfile.objects.filter(Q(username=username) | Q(password=password))
+            login(self.request, user)
+            return redirect('home')
+        else:
+            return redirect('user:login')
+
+    def form_invalid(self, form):
+        print('无效输入')
+        print(form)
+        print(self.request.session['CheckCode'])
+        print(self.request.POST.get('check_code'))
+        if self.request.session['CheckCode'].upper() == self.request.POST.get('check_code').upper():
+            username = self.request.POST.get('username')
+            password = self.request.POST.get('password')
+            user = UserProfile.objects.filter(Q(username=username) | Q(password=password)).first()
+            login(self.request, user)
+            return redirect('home')
+        else:
+            return redirect('user:login')
 
 
-class LoginView(View):
-    pass
+
+
+
+
