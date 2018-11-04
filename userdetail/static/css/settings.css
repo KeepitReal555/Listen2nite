@@ -1,0 +1,42 @@
+a:active {
+    color: #778087;
+    text-decoration: none;
+    word-break: break-all;
+}
+.sl {
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    width: 320px;
+    box-sizing: border-box;
+}
+.ml {
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    display: block;
+    width: 320px;
+    height: 160px;
+    box-sizing: border-box;
+}
+.problem {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 120%;
+    text-align: left;
+    background-color: #ffffc0;
+    border-left: 5px solid #fff000;
+    border-bottom: 1px solid #e2e2e2;
+    color: #333;
+}
+.negative {
+    color: #ff3c00;
+}
+.orange {
+    color: #f90;
+}
+.green {
+    color: green;
+}

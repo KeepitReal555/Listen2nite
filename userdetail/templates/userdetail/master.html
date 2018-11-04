@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block CSS %}
-    <link rel="stylesheet" href="{% static 'css/user.css' %}">
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
 {% endblock %}
 
 
@@ -15,12 +15,12 @@
                     <tbody>
                     <tr>
                         <td width="48" valign="top"><a href="#"><img
-                                src="{{ request.session.user_info.avatar }}"
+                                src="{{ user.avatar }}"
                                 class="rounded" border="0" align="default"
                                 style="max-width: 48px; max-height: 48px;"></a></td>
                         <td width="10" valign="top"></td>
                         <td width="auto" align="left"><span class="bigger"><a
-                                href="#"></a></span>
+                                href="#">{{ user.username }}</a></span>
                         </td>
                     </tr>
                     </tbody>
