@@ -37,7 +37,7 @@
                             <a href="#" class="top">{{ user.username }}</a>
 {#                            <a href="/notes" class="top">记事本</a>#}
                             <a href="{% url 'userdetail:settings' %}" class="top">设置</a>
-                            <a href="#;" onclick="if (confirm('确定要从 V2EX 登出？')) { location.href= '{% url 'user:logout' %}'; }" class="top">登出</a>
+                            <a href="#;" onclick="if (confirm('确定要从 Listen2nite 登出？')) { location.href= '{% url 'user:logout' %}'; }" class="top">登出</a>
                         </td>
 {#                            <a href="{% url 'user:logout' %}" class="top">登出</a>#}
                     {% else %}

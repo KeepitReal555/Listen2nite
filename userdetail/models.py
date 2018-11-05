@@ -28,7 +28,7 @@ class UserDetails(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
 
     class Meta:
-        verbose_name = "用户"
+        verbose_name = "用户详情"
         verbose_name_plural = verbose_name
 
     def __str__(self):

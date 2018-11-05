@@ -21,7 +21,7 @@ class SettingsView(FormView):
     def get_context_data(self, **kwargs):
         user = self.request.user
         user_detail = UserDetails.objects.filter(user=user).first()
-        print('user_detail', user_detail.company)
+        # print('user_detail', user_detail.company)
         if not user_detail:
             user_detail = UserDetails.objects.create(user=user)
         kwargs['user_detail'] = user_detail

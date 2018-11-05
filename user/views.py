@@ -56,7 +56,7 @@ class UserSignUpView(CreateView):
             return redirect('user:signup')
 
 
-class UserLoginView(CreateView):
+class UserLoginView(FormView):
     """
     注册视图
     """
@@ -78,7 +78,7 @@ class UserLoginView(CreateView):
             password = form.cleaned_data['password']
             user = UserProfile.objects.filter(Q(username=username) | Q(password=password))
             login(self.request, user)
-            return redirect('home')
+            return redirect('topic:index')
         else:
             return redirect('user:login')
 
@@ -92,7 +92,7 @@ class UserLoginView(CreateView):
             password = self.request.POST.get('password')
             user = UserProfile.objects.filter(Q(username=username) | Q(password=password)).first()
             login(self.request, user)
-            return redirect('home')
+            return redirect('topic:index')
         else:
             return redirect('user:login')
 

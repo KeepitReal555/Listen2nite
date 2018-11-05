@@ -14,3 +14,7 @@ class UserDetailsAdmin(admin.ModelAdmin):
     ordering = ('id',)
     # 分页，每页显示多少条
     list_per_page = 30
+
+
+admin.site.register(UserDetails, UserDetailsAdmin)
+
