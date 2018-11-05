@@ -11,6 +11,6 @@ app_name = 'topic'
 urlpatterns = [
     path('', TopicListView.as_view(), name='index'),
     path('topic/', include(([
-        path('', TopicListView.as_view, name='topic_list'),
+        path('new/', CreateTopicView.as_view(), name='create_topic'),
     ]))),
 ]

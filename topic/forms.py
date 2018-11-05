@@ -9,9 +9,10 @@ from .models import TopicCategory, Topic, Comment
 User = get_user_model()
 
 
-def topic_node_code_validate(topic_node_code):
-    if not TopicCategory.objects.filter(code=topic_node_code, category_type=2).first():
-        raise ValidationError('标签不存在')
+# def topic_node_code_validate(topic_node_code):
+#     if not TopicCategory.objects.filter(code=topic_node_code, category_type=2).first():
+#         raise ValidationError('标签不存在')
+
 
 class CreateTopicForm(forms.ModelForm):
     """
@@ -22,13 +23,13 @@ class CreateTopicForm(forms.ModelForm):
                                             'max_length': '字数超过限制'})
     content = forms.CharField(max_length=20000, required=False,
                               error_messages={'max_length': '字数超过限制'})
-    topic_node = forms.CharField(validators=[topic_node_code_validate], required=True,
-                                 error_messages={'required': '标签不能为空'})
-
+    category_name = forms.CharField(required=True,
+                               error_messages={'required': '标签不能为空'})
 
     class Meta:
         model = Topic
-        fields = ['title', 'content', 'topic_node']
+        fields = ['title', 'content', 'category_name']
+
 
 class CreateCommentForm(forms.ModelForm):
     """

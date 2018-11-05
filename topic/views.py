@@ -37,6 +37,17 @@ class CreateTopicView(CreateView):
     """
     model = Topic
     form_class = CreateTopicForm
+    template_name = 'topic/create_topic.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        向模板传递
+        :param kwargs:
+        :return:
+        """
+        nodes = TopicCategory.objects.all()
+        kwargs['nodes'] = nodes
+        return super(CreateTopicView, self).get_context_data(**kwargs)
 
     def form_valid(self, form):
         """
@@ -44,9 +55,23 @@ class CreateTopicView(CreateView):
         :param form:
         :return:
         """
+        print('验证成功')
+        topic = form.save(commit=False)
+        catagory_name = form.cleaned_data['category_name']
+        catagory = TopicCategory.objects.filter(name=catagory_name).first()
+        topic.category = catagory
+        topic.author = self.request.user
+        topic.save()
+        form.save_m2m()
+        return redirect('topic:index')
+
+    def form_invalid(self, form):
+        print('验证不成功')
+        print(form)
+        return redirect('topic:create_topic')
 
 
-
+@method_decorator([login_required], name='dispatch')
 class TopicDetailView(DetailView):
     """
     展示 Topic 详情视图

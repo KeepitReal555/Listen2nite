@@ -1,0 +1,29 @@
+.msl {
+    width: 100%;
+    border: none;
+    resize: none;
+    background-color: #f9f9f9;
+    outline: none;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px;
+    font-family: 'Helvetica Neue', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+    margin: 0px;
+    box-sizing: border-box;
+}
+.msl:focus {
+    background-color: #fff;
+}
+.node {
+    width: 20%;
+}
+.problem {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 120%;
+    text-align: left;
+    background-color: #ffffc0;
+    border-left: 5px solid #fff000;
+    border-bottom: 1px solid #e2e2e2;
+    color: #333;
+}
